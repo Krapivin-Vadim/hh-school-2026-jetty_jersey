@@ -9,6 +9,20 @@ import org.glassfish.jersey.servlet.ServletContainer;
 public class App {
 
     public static void main(String[] args) throws Exception {
+        Server server = new Server(8080);
+        ServletContextHandler context = new ServletContextHandler("/path");
+        ResourceConfig config = new ResourceConfig(SomeResource.class, SomeInterceptor.class);
+        ServletContainer servlet = new ServletContainer(config);
+        ServletHolder servletHolder = new ServletHolder(servlet);
+        context.addServlet(servletHolder, "/*");
+        server.setHandler(context);
+        try {
+            server.start();
+            server.join();
+        }
+        finally {
+            server.destroy();
+        }
 
     }
 }
