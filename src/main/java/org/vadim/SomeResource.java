@@ -23,8 +23,8 @@ public class SomeResource {
     public Item addItem(Item item) {
         try {
             return DataBase.addItem(item);
-        } catch (RuntimeException e) {
-            return new Item(0, "0", "0");
+        } catch (NullPointerException e) {
+            return new Item(0, "_", "_");
         }
 
     }
@@ -33,7 +33,12 @@ public class SomeResource {
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     public Item removeItem(Item item) {
-        return DataBase.removeItem(item);
+        try {
+            return DataBase.removeItem(item);
+        }
+        catch (NullPointerException e){
+            return new Item(0, "_", "_");
+        }
     }
 
 }
