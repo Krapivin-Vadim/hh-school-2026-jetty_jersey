@@ -11,7 +11,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler("/path");
-        ResourceConfig config = new ResourceConfig(SomeResource.class, SomeInterceptor.class);
+        ResourceConfig config = new ResourceConfig();
+        config.packages("org.vadim");
         ServletContainer servlet = new ServletContainer(config);
         ServletHolder servletHolder = new ServletHolder(servlet);
         context.addServlet(servletHolder, "/*");

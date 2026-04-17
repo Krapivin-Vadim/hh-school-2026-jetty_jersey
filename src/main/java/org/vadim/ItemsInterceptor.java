@@ -12,11 +12,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Provider
-public class SomeInterceptor implements ReaderInterceptor, ContainerResponseFilter, ContainerRequestFilter {
+public class ItemsInterceptor implements ReaderInterceptor, ContainerResponseFilter, ContainerRequestFilter {
 
     @Override
     public Object aroundReadFrom(ReaderInterceptorContext readerInterceptorContext) throws IOException, WebApplicationException {
-        // РќР°СЃРєРѕР»СЊРєРѕ СЏ РїРѕРЅСЏР», С‚Рѕ Сѓ
         byte[] byteBuffer = readerInterceptorContext.getInputStream().readAllBytes();
         String requestBody = new String(byteBuffer, StandardCharsets.UTF_8);
         System.out.println("Body " + requestBody);
@@ -35,5 +34,6 @@ public class SomeInterceptor implements ReaderInterceptor, ContainerResponseFilt
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         System.out.println("--- GET REQUEST ---");
         System.out.println("Method " + containerRequestContext.getMethod());
+        System.out.println("Path " + containerRequestContext.getUriInfo().getAbsolutePath());
     }
 }
