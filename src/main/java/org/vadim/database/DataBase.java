@@ -16,6 +16,19 @@ public class DataBase {
         return item;
     }
 
+    public static Item removeItemByIDs(Integer userId, Integer itemId){
+        List<Item> to_delete = db.stream()
+                .filter(item -> item.itemId().equals(itemId) && item.userId().equals(userId))
+                .toList();
+
+        if(to_delete.size() != 1){
+            return null;
+        }
+
+        db.remove(to_delete.getFirst());
+        return to_delete.getFirst();
+    }
+
     public static ShopList getProducts(Integer userId, String listName) {
         return new ShopList(
                 userId,
